@@ -48,15 +48,14 @@ function generateWordSet(qType, targetWord, targetPosition) {
     return { words: [targetWord], letters: [] };
   }
 
-  if (qType === "same") {
+ if (qType === "same") {
     const corrects = allWords.filter(
       (w) => w.name !== targetWord.name && getLetter(w, targetPosition) === targetLetter
     );
 
-    const potentialDistractors = allWords.filter(
-      (w) => getLetter(w, targetPosition) !== targetLetter
+    const potentialDistractors = shuffle(
+      allWords.filter((w) => getLetter(w, targetPosition) !== targetLetter)
     );
-
     // ensure distractors have unique letters
     const usedLetters = new Set();
     const distractors = [];
@@ -69,7 +68,8 @@ function generateWordSet(qType, targetWord, targetPosition) {
       }
     }
 
-    const selectedCorrects = corrects.sort(() => 0.5 - Math.random()).slice(0, 2);
+    const selectedCorrects = shuffle(corrects).slice(0, 2);
+
     return { words: shuffle([targetWord, ...selectedCorrects, ...distractors]), letters: [] };
   }
 
@@ -78,10 +78,9 @@ function generateWordSet(qType, targetWord, targetPosition) {
       (w) => w.name !== targetWord.name && getLetter(w, targetPosition) === targetLetter
     );
 
-    const potentialDistractors = allWords.filter(
-      (w) => getLetter(w, targetPosition) !== targetLetter
-    );
-
+   const potentialDistractors = shuffle(
+       allWords.filter((w) => getLetter(w, targetPosition) !== targetLetter)
+   );
     const usedLetters = new Set();
     const uniqueDistractors = [];
     for (const w of potentialDistractors) {
@@ -92,12 +91,11 @@ function generateWordSet(qType, targetWord, targetPosition) {
       }
     }
 
-    const oddWord = uniqueDistractors[Math.floor(Math.random() * uniqueDistractors.length)];
-    const selectedCorrects = corrects.sort(() => 0.5 - Math.random()).slice(0, 2);
+    const oddWord = shuffle(uniqueDistractors)[0]; // pick random distractor
+    const selectedCorrects = shuffle(corrects).slice(0, 2);
 
     return { words: shuffle([targetWord, ...selectedCorrects, oddWord]), letters: [] };
   }
-
   if (qType === "sort") {
     const groups = {};
     allWords.forEach((w) => {

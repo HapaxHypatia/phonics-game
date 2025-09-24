@@ -29,7 +29,6 @@ function FindDifferentFirstLetter({ question, onAnswer }) {
       // Correct "different" word
       setFound(true);
       setFeedback("✅ Correct!");
-      new Audio(w.audio).play();
       setTimeout(() => {
         setFeedback(null);
         onAnswer(true);
@@ -37,7 +36,6 @@ function FindDifferentFirstLetter({ question, onAnswer }) {
     } else {
       // Incorrect word
       setFeedback("❌ Try again");
-      new Audio(w.audio).play();
       setTimeout(() => setFeedback(null), 800);
     }
   }

@@ -31,7 +31,6 @@ function FindSameFirstLetter({ question, onAnswer }) {
       setFoundWords(newFoundWords);
 
       setFeedback("✅ Correct!");
-      new Audio(w.audio).play();
 
       // Only move to next question when all correct words are found
       const totalCorrect = words.filter((wordItem) => getLetter(wordItem) === targetLetter).length;
@@ -44,7 +43,6 @@ function FindSameFirstLetter({ question, onAnswer }) {
     } else {
       // Incorrect click
       setFeedback("❌ Try again");
-      new Audio(w.audio).play();
       setTimeout(() => setFeedback(null), 800);
       // Do NOT call onAnswer — user can continue
     }
