@@ -1,3 +1,20 @@
+.word, .letter {
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.word img, .letter img {
+  width: 120px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.word img:hover, .letter img:hover {
+  transform: scale(1.1);
+}
 #root {
     margin: 0 auto;
     text-align: center;
@@ -80,4 +97,5 @@
 
 .letter{
     border: solid yellow 1px;
+
 }

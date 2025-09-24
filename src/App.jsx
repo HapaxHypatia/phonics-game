@@ -1,36 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import {Letter} from "./components/index.js";
+import React from "react";
+import QuestionWrapper from "./components/QuestionWrapper";
+import SplashPage from "./components/SplashPage.jsx";
 
 function App() {
-
   return (
-    <div id={"main"}>
-        <div id={"top-box"}>
-            <div id={"top-left"} className={"top left"}><div className={"item"}>top left</div></div>
-            <div id={"top-centre"} className={"top centre"}><div className={"item"}>top centre</div></div>
-            <div id={"top-right"} className={"top right"}><div className={"item"}>top right</div></div>
-        </div>
-        <div id={"centre-box"}>
-            <div>
-                <Letter></Letter>
-            </div>
-            <div>
-                <Letter></Letter>
-            </div>
-            <div>
-                <Letter></Letter>
-            </div>
-        </div>
-        <div id={"bottom-box"}>
-            <div id={"bottom-left"} className={"bottom left"}><div className={"item"}>bottom left</div></div>
-            <div id={"bottom-centre"} className={"bottom centre"}><div className={"item"}>bottom centre</div></div>
-            <div id={"bottom-right"} className={"bottom right"}><div className={"item"}>bottom right</div></div>
-        </div>
+    <div className="App">
+      <h1 className="text-2xl text-center mb-4">Phonics Fun 🎵</h1>
+      <SplashPage />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+
+
+
+//TODO fix letter images to all be same height
+//TODO change file type of images to all be the same
+//TODO get images for all remaining words
+//TODO fix mixed up letter sounds
+//TODO components/pages for different types of quiz
+
+//
+// Click first/middle/last letter
+// Match words that share first/middle/last letter
+// sort by first/middle/last letter
+// Identify word to match picture
+// Identify letter to complete word
+// Identify picture to match word
+// Identify word to match audio
+// Identify audio to match word

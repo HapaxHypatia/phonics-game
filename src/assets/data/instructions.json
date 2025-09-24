@@ -1,0 +1,25 @@
+{
+  "first": {
+    "first": "src/assets/audio/instructions/first_findFirst.mp3",
+    "last": "src/assets/audio/instructions/last_findFirst.mp3",
+    "middle": "src/assets/audio/instructions/middle_findFirst.mp3"
+  },
+  "same": {
+    "first": "src/assets/audio/instructions/first_findSame.mp3",
+    "last": "src/assets/audio/instructions/last_findSame.mp3",
+    "middle": "src/assets/audio/instructions/middle_findSame.mp3"
+  },
+  "different": {
+    "first": "src/assets/audio/instructions/first_findDifferent.mp3",
+    "last": "src/assets/audio/instructions/last_findDifferent.mp3",
+    "middle": "src/assets/audio/instructions/middle_findDifferent.mp3"
+  },
+  "sort": {
+    "first": "src/assets/audio/instructions/first_sort.mp3",
+    "last": "src/assets/audio/instructions/last_sort.mp3",
+    "middle": "src/assets/audio/instructions/middle_sort.mp3"
+  },
+  "order": {
+    "any": "src/assets/audio/instructions/orderLetters.mp3"
+  }
+}
