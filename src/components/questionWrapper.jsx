@@ -10,8 +10,6 @@ import {
 import wordList from "../assets/data/words.json";
 import instructions from "../assets/data/instructions.json";
 
-
-
 // ---------------- Level Config ----------------
 const levelConfig = {
   1: { type: "cycle", questionTypes: ["first", "same", "different", "sort"], targets: ["first"] },
@@ -42,48 +40,41 @@ function shuffle(array) {
 // ---------------- Generate Word Set ----------------
 function generateWordSet(qType, targetWord, targetPosition) {
   const allWords = [...wordList];
-  const targetLetter = getLetter(targetWord, targetPosition);
 
   if (qType === "first" || qType === "order") {
     return { words: [targetWord], letters: [] };
   }
 
- if (qType === "same") {
+  if (qType === "same") {
+    // Pick a target letter from a random word
+    const chosenWord = allWords[Math.floor(Math.random() * allWords.length)];
+    const targetLetter = getLetter(chosenWord, targetPosition);
+
     const corrects = allWords.filter(
-      (w) => w.name !== targetWord.name && getLetter(w, targetPosition) === targetLetter
+      (w) => getLetter(w, targetPosition) === targetLetter
     );
 
-    const potentialDistractors = shuffle(
+    const distractors = shuffle(
       allWords.filter((w) => getLetter(w, targetPosition) !== targetLetter)
-    );
-    // ensure distractors have unique letters
-    const usedLetters = new Set();
-    const distractors = [];
-    for (const w of potentialDistractors) {
-      const letter = getLetter(w, targetPosition);
-      if (!usedLetters.has(letter)) {
-        distractors.push(w);
-        usedLetters.add(letter);
-        if (distractors.length >= 2) break;
-      }
-    }
+    ).slice(0, 2);
 
-    const selectedCorrects = shuffle(corrects).slice(0, 2);
-
-    return { words: shuffle([targetWord, ...selectedCorrects, ...distractors]), letters: [] };
+    return { words: shuffle([...corrects, ...distractors]), letters: [] };
   }
 
   if (qType === "different") {
+    const targetLetter = getLetter(targetWord, targetPosition);
+
     const corrects = allWords.filter(
       (w) => w.name !== targetWord.name && getLetter(w, targetPosition) === targetLetter
     );
 
-   const potentialDistractors = shuffle(
-       allWords.filter((w) => getLetter(w, targetPosition) !== targetLetter)
-   );
+    const distractors = shuffle(
+      allWords.filter((w) => getLetter(w, targetPosition) !== targetLetter)
+    );
+
     const usedLetters = new Set();
     const uniqueDistractors = [];
-    for (const w of potentialDistractors) {
+    for (const w of distractors) {
       const letter = getLetter(w, targetPosition);
       if (!usedLetters.has(letter)) {
         uniqueDistractors.push(w);
@@ -96,6 +87,7 @@ function generateWordSet(qType, targetWord, targetPosition) {
 
     return { words: shuffle([targetWord, ...selectedCorrects, oddWord]), letters: [] };
   }
+
   if (qType === "sort") {
     const groups = {};
     allWords.forEach((w) => {
@@ -120,45 +112,40 @@ function generateWordSet(qType, targetWord, targetPosition) {
 }
 
 // ---------------- Question Wrapper ----------------
-export default function QuestionWrapper({ difficulty = 5, testType }) {
+export default function QuestionWrapper({ difficulty = 5 }) {
   const [level, setLevel] = useState(1);
   const [typeIndex, setTypeIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [question, setQuestion] = useState(null);
   const [questionCompleted, setQuestionCompleted] = useState(false);
+
   // Generate a new question
   function generateQuestion() {
     const config = levelConfig[level];
-    const qType = testType
-    ? testType
-    : config.type === "cycle"
-    ? config.questionTypes[typeIndex % config.questionTypes.length]
-    : config.questionTypes[Math.floor(Math.random() * config.questionTypes.length)];
-
-    // const qType =
-    //   config.type === "cycle"
-    //     ? config.questionTypes[typeIndex % config.questionTypes.length]
-    //     : config.questionTypes[Math.floor(Math.random() * config.questionTypes.length)];
+    const qType =
+      config.type === "cycle"
+        ? config.questionTypes[typeIndex % config.questionTypes.length]
+        : config.questionTypes[Math.floor(Math.random() * config.questionTypes.length)];
 
     const targetPosition =
       config.targets[Math.floor(Math.random() * config.targets.length)];
 
-    const word = randomWord();
-    const { words, letters } = generateWordSet(qType, word, targetPosition);
+    let questionData;
+    if (qType === "same") {
+      const { words, letters } = generateWordSet(qType, null, targetPosition);
+      questionData = { type: qType, targetPosition, words, letters };
+    } else {
+      const word = randomWord();
+      const { words, letters } = generateWordSet(qType, word, targetPosition);
+      questionData = { type: qType, targetPosition, word, words, letters };
+    }
 
     const instructionAudio =
       qType === "order"
         ? instructions.order.any
         : instructions[qType][targetPosition];
 
-    return {
-      type: qType,
-      targetPosition,
-      word,
-      words,
-      letters,
-      instructionAudio
-    };
+    return { ...questionData, instructionAudio };
   }
 
   // Play instruction audio when question loads
@@ -225,10 +212,3 @@ export default function QuestionWrapper({ difficulty = 5, testType }) {
       return <div>Unknown question type</div>;
   }
 }
-
-
-//TODO Timing issues - sometimes items are not yet ready to click
-//TODO Sometimes a word from the previous question (or from the next??) appears by itself before the question is fully rendered
-//TODO Echo on the audio file for the words
-//TODO make word boxes bigger for ease of clicking
-//TODO style the words with the CVC colouring

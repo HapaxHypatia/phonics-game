@@ -55,57 +55,35 @@ function SortByFirstLetter({ question, onAnswer }) {
     }
   }
 
-  return (
+ return (
     <div className="question">
       <h2>Drag the words into the correct boxes ({targetPosition} letter)</h2>
 
-      {/* Pool of unsorted words */}
-      <div
-        className="pool-container"
-        style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px" }}
-      >
+      <div className="pool-container">
         {words
           .filter((w) => !placedWords[w.name])
           .map((w) => (
             <div
               key={w.name}
+              className="word-draggable"
               draggable
               onDragStart={(e) => handleDragStart(e, w)}
-              style={{
-                cursor: "grab",
-                border: "1px solid #ccc",
-                padding: "5px",
-                borderRadius: "4px",
-              }}
             >
               <Word img={w.img} audio={w.audio} name={w.name} />
             </div>
           ))}
       </div>
 
-      {/* Letter boxes */}
-      <div className="sort-container" style={{ display: "flex", gap: "20px" }}>
+      <div className="sort-container">
         {letters.map((l) => (
-          <div
-            key={l}
-            className="letter-box"
-            onDrop={(e) => handleDrop(e, l)}
-            onDragOver={handleDragOver}
-            style={{
-              minWidth: "150px",
-              minHeight: "150px",
-              border: "2px dashed #aaa",
-              borderRadius: "8px",
-              padding: "10px",
-            }}
-          >
+          <div key={l} className="letter-box" onDrop={(e) => handleDrop(e, l)} onDragOver={handleDragOver}>
             <h3>{l.toUpperCase()}</h3>
-            <div className="word-slot" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <div className="word-slot">
               {Object.entries(placedWords)
                 .filter(([wordName, letter]) => letter === l)
                 .map(([wordName]) => {
                   const w = words.find((w) => w.name === wordName);
-                  if (!w) return null; // safety check
+                  if (!w) return null;
                   return <Word key={wordName} img={w.img} audio={w.audio} name={w.name} />;
                 })}
             </div>
@@ -113,7 +91,7 @@ function SortByFirstLetter({ question, onAnswer }) {
         ))}
       </div>
 
-      {feedback && <p>{feedback}</p>}
+      {feedback && <p className="feedback">{feedback}</p>}
     </div>
   );
 }

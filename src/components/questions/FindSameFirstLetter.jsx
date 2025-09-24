@@ -1,16 +1,15 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Word from "../Word";
 
 function FindSameFirstLetter({ question, onAnswer }) {
-  useEffect(() => {
-      setFoundWords([]);
-      setFeedback(null);
-    }, [question]);
-  const { words, word: targetWord, targetPosition } = question;
+  const { words, targetPosition } = question; // no targetWord needed now
   const [feedback, setFeedback] = useState(null);
-  const [foundWords, setFoundWords] = useState([]); // names of correctly clicked words
+  const [foundWords, setFoundWords] = useState([]);
 
-
+  useEffect(() => {
+    setFoundWords([]);
+    setFeedback(null);
+  }, [question]);
 
   function getLetter(w) {
     if (targetPosition === "first") return w.name[0];
@@ -19,32 +18,28 @@ function FindSameFirstLetter({ question, onAnswer }) {
     return "";
   }
 
+  // Pick the letter of the first word in the list as the target
+  const targetLetter = getLetter(words[0]);
+
   function handleClick(w) {
-    if (foundWords.includes(w.name)) return; // ignore already found words
+    if (foundWords.includes(w.name)) return;
 
     const letterOfWord = getLetter(w);
-    const targetLetter = getLetter(targetWord);
 
     if (letterOfWord === targetLetter) {
-      // Correct click
-      const newFoundWords = [...foundWords, w.name];
-      setFoundWords(newFoundWords);
-
+      setFoundWords((prev) => [...prev, w.name]);
       setFeedback("✅ Correct!");
 
-      // Only move to next question when all correct words are found
       const totalCorrect = words.filter((wordItem) => getLetter(wordItem) === targetLetter).length;
-      if (newFoundWords.length >= totalCorrect) {
+      if (foundWords.length + 1 >= totalCorrect) {
         setTimeout(() => {
           setFeedback(null);
           onAnswer(true);
         }, 800);
       }
     } else {
-      // Incorrect click
       setFeedback("❌ Try again");
       setTimeout(() => setFeedback(null), 800);
-      // Do NOT call onAnswer — user can continue
     }
   }
 
@@ -57,20 +52,15 @@ function FindSameFirstLetter({ question, onAnswer }) {
           return (
             <div
               key={idx}
-              style={{
-                opacity: isFound ? 0.5 : 1,
-                border: isFound ? "2px solid green" : "none",
-                display: "inline-block",
-                margin: "10px",
-                cursor: isFound ? "default" : "pointer",
-              }}
+              className={`word-item ${isFound ? "found" : ""}`}
+              onClick={() => !isFound && handleClick(w)}
             >
-              <Word img={w.img} audio={w.audio} name={w.name} onClick={() => handleClick(w)} />
+              <Word word={w} />
             </div>
           );
         })}
       </div>
-      {feedback && <p>{feedback}</p>}
+      {feedback && <p className="feedback">{feedback}</p>}
     </div>
   );
 }

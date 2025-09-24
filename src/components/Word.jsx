@@ -1,16 +1,21 @@
-function Word(props) {
-  const { img, audio, name, onClick } = props;
-  const sound = new Audio(audio);
+import Letter from "./Letter";
 
-  function playSound(e) {
-    e.preventDefault();
-    sound.play();
-    if (onClick) onClick();
-  }
-
+function Word({ word, onClick }) {
   return (
-    <div className="word" id={name}>
-      <img src={img} onClick={playSound} alt={name} />
+    <div className="word-with-letters" onClick={onClick} style={{ display: "flex", gap: "5px" }}>
+      {word.name.split("").map((char, idx) => {
+        const img = `src/assets/images/letters/${char}.png`;
+        const audio = `src/assets/audio/letters/${char}.mp3`;
+
+        return (
+          <Letter
+            key={idx}
+            img={img}
+            audio={audio}
+            name={char}
+          />
+        );
+      })}
     </div>
   );
 }

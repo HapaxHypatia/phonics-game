@@ -1,3 +1,164 @@
+/* ---------------- General Question Styles ---------------- */
+.question {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Berlin Sans FB", "Arial", sans-serif;
+  text-align: center;
+}
+
+.question h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.question p {
+  margin-top: 15px;
+  font-size: 1.2rem;
+}
+
+/* ---------------- Word Buttons ---------------- */
+.word-list div,
+.pool-container div {
+  display: inline-block;
+  margin: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.2s ease;
+}
+
+.word-list div:hover,
+.pool-container div:hover {
+  transform: scale(1.05);
+  border-color: #999;
+}
+
+.word-list div.correct {
+  border-color: green;
+  opacity: 0.5;
+  cursor: default;
+}
+
+.word-list div.incorrect {
+  border-color: red;
+}
+
+/* ---------------- Individual Letters in Words ---------------- */
+.word-list div span,
+.pool-container div span {
+  font-family: "Berlin Sans FB", "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.word-list div span.consonant,
+.pool-container div span.consonant {
+  color: #F8CBAD;
+}
+
+.word-list div span.vowel,
+.pool-container div span.vowel {
+  color: #7DADD2;
+}
+
+/* ---------------- OrderLetters Styles ---------------- */
+.word-with-letters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px; /* small spacing between letters */
+}
+
+.word-with-letters div {
+  width: 50px;
+  height: 50px;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Berlin Sans FB", "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.word-with-letters div.correct {
+  border-color: green;
+}
+
+.word-with-letters div.incorrect {
+  border-color: red;
+}
+
+/* ---------------- Sort Question Styles ---------------- */
+.sort-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.letter-box {
+  min-width: 150px;
+  min-height: 150px;
+  border: 2px dashed #aaa;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-slot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* ---------------- Pool of Unsorted Words ---------------- */
+.pool-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* ---------------- Feedback Messages ---------------- */
+.feedback {
+  margin-top: 12px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+/* Optional: green/red animations for quick visual feedback */
+.word-list div.correct,
+.word-with-letters div.correct {
+  animation: flashGreen 0.3s;
+}
+
+.word-list div.incorrect,
+.word-with-letters div.incorrect {
+  animation: flashRed 0.3s;
+}
+
+@keyframes flashGreen {
+  0% { background-color: #fff; }
+  50% { background-color: #d4ffd4; }
+  100% { background-color: #fff; }
+}
+
+@keyframes flashRed {
+  0% { background-color: #fff; }
+  50% { background-color: #ffd4d4; }
+  100% { background-color: #fff; }
+}
+
 .word, .letter {
   display: inline-block;
   margin: 10px;
@@ -10,6 +171,11 @@
   border-radius: 12px;
   box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
   transition: transform 0.2s;
+}
+
+.letter img {
+  max-height: 60px;
+  display: block;
 }
 
 .word img:hover, .letter img:hover {

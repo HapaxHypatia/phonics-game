@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from "react";
 
 function Letter({ img, audio: audioSrc, name, onClick }) {
   const audioRef = useRef(null);
+  const isVowel = /[aeiouAEIOU]/.test(name);
+
 
   // Reset cached audio if source changes
   useEffect(() => {
@@ -23,8 +25,8 @@ function Letter({ img, audio: audioSrc, name, onClick }) {
   }
 
   return (
-    <div className="letter" id={name}>
-      <img src={img} onClick={handleClick} alt={name} />
+    <div className="letter" onClick={handleClick}>
+      {img && <img src={img} alt={name} style={{ maxHeight: "50px" }} />}
     </div>
   );
 }

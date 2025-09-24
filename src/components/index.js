@@ -1,7 +1,7 @@
 // Base components
 export { default as Letter } from "./Letter";
 export { default as Word } from "./Word";
-export { default as WordWithLetters } from "./WordWithLetters";
+export { default as WordWithLetters } from "./Word.jsx";
 export { default as SplashPage } from "./SplashPage";
 
 // Question types

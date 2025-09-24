@@ -3,11 +3,20 @@ import React from "react";
 import QuestionWrapper from "./components/QuestionWrapper";
 import SplashPage from "./components/SplashPage.jsx";
 
+// function App() {
+//   return (
+//     <div className="App">
+//       <h1 className="text-2xl text-center mb-4">Phonics Fun 🎵</h1>
+//       <SplashPage />
+//     </div>
+//   );
+// }
+
 function App() {
   return (
     <div className="App">
       <h1 className="text-2xl text-center mb-4">Phonics Fun 🎵</h1>
-      <SplashPage />
+      <QuestionWrapper />
     </div>
   );
 }

@@ -43,28 +43,29 @@ function FindDifferentFirstLetter({ question, onAnswer }) {
   // Find the odd word (different letter)
   const oddWord = words.find((w) => getLetter(w) !== targetLetter);
 
-  return (
+return (
     <div className="question">
       <h2>Find the word with a different {targetPosition} letter</h2>
       <div className="word-list">
         {words.map((w, idx) => (
           <div
             key={idx}
+            className="word-item"
             style={{
-              display: "inline-block",
-              margin: "10px",
               opacity: found && w.name !== oddWord?.name ? 0.5 : 1,
               border: found && w.name === oddWord?.name ? "2px solid green" : "none",
               cursor: found ? "default" : "pointer",
             }}
+            onClick={() => handleClick(w)}
           >
-            <Word img={w.img} audio={w.audio} name={w.name} onClick={() => handleClick(w)} />
+            <Word img={w.img} audio={w.audio} name={w.name} />
           </div>
         ))}
       </div>
-      {feedback && <p>{feedback}</p>}
+      {feedback && <p className="feedback">{feedback}</p>}
     </div>
   );
 }
+
 
 export default FindDifferentFirstLetter;

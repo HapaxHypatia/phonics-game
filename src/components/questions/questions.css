@@ -1,0 +1,92 @@
+/* --- General question wrapper --- */
+.question {
+  margin: 20px;
+}
+
+.question h2 {
+  margin-bottom: 15px;
+  font-family: 'Berlin Sans FB', sans-serif;
+}
+
+/* --- Feedback --- */
+.feedback {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* --- Word lists (FindSame/FindDifferent) --- */
+.word-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.word-item {
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: opacity 0.2s, border 0.2s;
+}
+
+.word-item.found {
+  opacity: 0.5;
+  border: 2px solid green;
+  cursor: default;
+}
+
+/* --- OrderLetters --- */
+.word-with-letters {
+  display: flex;
+  gap: 10px;
+}
+
+.letter-box-order {
+  border-radius: 8px;
+  border: 3px solid transparent;
+  transition: border 0.2s;
+}
+
+/* Correct / Incorrect borders */
+.letter-box-order.correct {
+  border-color: green;
+}
+
+.letter-box-order.incorrect {
+  border-color: red;
+}
+
+/* --- SortByFirstLetter --- */
+.pool-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.word-draggable {
+  cursor: grab;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.sort-container {
+  display: flex;
+  gap: 20px;
+}
+
+.letter-box {
+  min-width: 150px;
+  min-height: 150px;
+  border: 2px dashed #aaa;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.word-slot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

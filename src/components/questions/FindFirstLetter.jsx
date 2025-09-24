@@ -1,5 +1,5 @@
 import { useState } from "react";
-import WordWithLetters from "../WordWithLetters";
+import WordWithLetters from "../Word.jsx";
 
 function FindFirstLetter({ question, onAnswer }) {
   const { word, targetPosition } = question;
